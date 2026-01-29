@@ -235,13 +235,14 @@ body {
 }
 
 .menu .row .menu-card {
+  flex: 1 1 20rem;
   text-align: center;
   padding-bottom: 4rem;
 }
 
 .menu .row .menu-card img {
   border-radius: 50%;
-  width: 60%;
+  width: 80%;
 }
 
 .menu .row .menu-card .menu-card-title {
@@ -408,6 +409,10 @@ footer .credit a {
 
   .menu p {
     font-size: 1.2rem;
+  }
+
+  .menu .row {
+    flex-wrap: wrap;
   }
 
   .contact .row {
