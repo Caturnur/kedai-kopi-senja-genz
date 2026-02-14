@@ -7,6 +7,8 @@ document.addEventListener("alpine:init", () => {
       { id: 4, name: "Coffe Ngunu", img: "4.jpg", price: 9000 },
       { id: 5, name: "Coffe Ngopo", img: "5.jpg", price: 5000 },
     ],
+    selectedItem: null,
+    showModal: false,
   }));
 
   Alpine.store("cart", {

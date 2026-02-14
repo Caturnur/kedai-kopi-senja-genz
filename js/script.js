@@ -3,7 +3,7 @@
 const navbarNav = document.querySelector(".navbar-nav");
 const searchFrom = document.querySelector(".search-form");
 const searchBox = document.querySelector("#search-box");
-const shoppingCart = document.querySelector(".shopping-cart");
+// const shoppingCart = document.querySelector(".shopping-cart");
 
 //ketika diklik akan active
 document.querySelector("#hamburger-menu").onclick = () => {
@@ -16,15 +16,15 @@ document.querySelector("#search-button").onclick = (e) => {
   e.preventDefault();
 };
 
-document.querySelector("#shopping-cart-button").onclick = () => {
-  shoppingCart.classList.toggle("active");
-};
+// document.querySelector("#shopping-cart-button").onclick = () => {
+//   shoppingCart.classList.toggle("active");
+// };
 
-//ketika klik diluar nav hamburger & search ilang
+//ketika klik diluar nav hamburger & search ilang & shopping-cart
 
 const hm = document.querySelector("#hamburger-menu");
 const sb = document.querySelector("#search-button");
-const sc = document.querySelector("#shopping-cart-button");
+// const sc = document.querySelector("#shopping-cart-button");
 
 document.addEventListener("click", function (e) {
   if (!hm.contains(e.target) && !navbarNav.contains(e.target)) {
@@ -33,12 +33,12 @@ document.addEventListener("click", function (e) {
   if (!sb.contains(e.target) && !searchFrom.contains(e.target)) {
     searchFrom.classList.remove("active");
   }
-  if (!sc.contains(e.target) && !shoppingCart.contains(e.target)) {
-    shoppingCart.classList.remove("active");
-  }
+  // if (!sc.contains(e.target) && !shoppingCart.contains(e.target)) {
+  //   shoppingCart.classList.remove("active");
+  // }
 });
 
-//modal box
+// modal box
 
 const itemDetailModal = document.querySelector("#item-detail-modal");
 const itemDetailButton = document.querySelectorAll(".item-detail-button");
