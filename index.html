@@ -69,63 +69,86 @@
         x-show="cartOpen"
         @click.outside="cartOpen = false"
       >
-        <template x-for="item in $store.cart.items" :key="item.id">
-          <div class="cart-item">
-            <img :src="'img/product/' + item.img" :alt="item.name" />
+        <!-- SCROLL AREA -->
+        <div class="cart-items">
+          <template x-for="item in $store.cart.items" :key="item.id">
+            <div class="cart-item">
+              <img :src="'img/product/' + item.img" :alt="item.name" />
 
-            <div class="item-detail">
-              <h3 x-text="item.name"></h3>
+              <div class="item-detail">
+                <h3 x-text="item.name"></h3>
 
-              <!-- Row horizontal -->
-              <div class="item-row">
-                <!-- Harga -->
-                <div class="item-price">
-                  <span x-text="rupiah(item.price)"></span>
-                </div>
+                <!-- Row horizontal -->
+                <div class="item-row">
+                  <!-- Harga -->
+                  <div class="item-price">
+                    <span x-text="rupiah(item.price)"></span>
+                  </div>
 
-                <!-- Qty -->
-                <div class="item-qty">
-                  <button
-                    class="qty-btn"
-                    @click="$store.cart.decrease(item.id)"
-                  >
-                    −
-                  </button>
+                  <!-- Qty -->
+                  <div class="item-qty">
+                    <button
+                      class="qty-btn"
+                      @click="$store.cart.decrease(item.id)"
+                    >
+                      −
+                    </button>
 
-                  <span
-                    class="qty-number"
-                    x-show="item.quantity"
-                    x-text="item.quantity"
-                  ></span>
+                    <span
+                      class="qty-number"
+                      x-show="item.quantity"
+                      x-text="item.quantity"
+                    ></span>
 
-                  <button
-                    class="qty-btn"
-                    @click="$store.cart.increase(item.id)"
-                  >
-                    +
-                  </button>
-                </div>
+                    <button
+                      class="qty-btn"
+                      @click="$store.cart.increase(item.id)"
+                    >
+                      +
+                    </button>
+                  </div>
 
-                <!-- Subtotal -->
-                <div class="item-subtotal">
-                  =
-                  <strong x-text="rupiah(item.price * item.quantity)"></strong>
+                  <!-- Subtotal -->
+                  <div class="item-subtotal">
+                    =
+                    <strong
+                      x-text="rupiah(item.price * item.quantity)"
+                    ></strong>
+                  </div>
                 </div>
               </div>
+
+              <i
+                data-feather="trash-2"
+                class="remove-item"
+                @click="$store.cart.remove(item.id)"
+              >
+              </i>
             </div>
+          </template>
+        </div>
 
-            <i
-              data-feather="trash-2"
-              class="remove-item"
-              @click="$store.cart.remove(item.id)"
-            >
-            </i>
+        <!-- FOOTER (STICKY) -->
+        <div class="cart-footer" x-show="$store.cart.items.length > 0">
+          <div class="cart-total">
+            Total: <span x-text="rupiah($store.cart.total)"></span>
           </div>
-        </template>
 
-        <!-- Total -->
-        <div class="cart-total" x-show="$store.cart.items.length > 0">
-          Total: <span x-text="rupiah($store.cart.total)"></span>
+          <div class="delivery-option">
+            <h4>Pilih Metode</h4>
+
+            <label class="delivery-item">
+              <input type="radio" value="pickup" x-model="deliveryOption" />
+              Pickup
+            </label>
+
+            <label class="delivery-item">
+              <input type="radio" value="delivery" x-model="deliveryOption" />
+              Pesan Antar
+            </label>
+          </div>
+
+          <button class="checkout-btn" @click="checkout()">Checkout</button>
         </div>
       </div>
       <!-- Shopping Cart End -->
@@ -229,7 +252,7 @@
         </p>
 
         <div class="row">
-          <template x-for="(item, index) in items" x-key="index">
+          <template x-for="item in items" :key="item.id">
             <div class="product-card">
               <div class="product-icons">
                 <a href="#" @click.prevent="$store.cart.add(item)">
@@ -245,10 +268,7 @@
                     <use href="img/feather-sprite.svg#shopping-cart" />
                   </svg>
                 </a>
-                <a
-                  href="#"
-                  @click.prevent="selectedItem = item; showModal = true"
-                >
+                <a href="#" @click.prevent="openModal(item)">
                   <svg
                     width="24"
                     height="24"
@@ -268,62 +288,21 @@
               <div class="product-content">
                 <h3 x-text="item.name"></h3>
                 <div class="product-stars">
-                  <svg
-                    width="24"
-                    height="24"
-                    fill="currentColor"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <use href="img/feather-sprite.svg#star" />
-                  </svg>
-                  <svg
-                    width="24"
-                    height="24"
-                    fill="currentColor"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <use href="img/feather-sprite.svg#star" />
-                  </svg>
-                  <svg
-                    width="24"
-                    height="24"
-                    fill="currentColor"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <use href="img/feather-sprite.svg#star" />
-                  </svg>
-                  <svg
-                    width="24"
-                    height="24"
-                    fill="currentColor"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <use href="img/feather-sprite.svg#star" />
-                  </svg>
-                  <svg
-                    width="24"
-                    height="24"
-                    fill="currentColor"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <use href="img/feather-sprite.svg#star" />
-                  </svg>
+                  <template x-for="star in 5" :key="star">
+                    <svg
+                      width="24"
+                      height="24"
+                      class="star"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      :class="item.rating >= star ? 'active' : ''"
+                    >
+                      <use href="img/feather-sprite.svg#star"></use>
+                    </svg>
+                  </template>
                 </div>
+
                 <div class="product-price">
                   <span x-text="rupiah(item.price)"></span>
                 </div>
@@ -335,15 +314,9 @@
       <!-- product section end -->
 
       <!-- modal box item details product start -->
-      <div
-        class="modal"
-        x-show="showModal"
-        x-transition
-        @click.outside="showModal = false"
-        style="display: none"
-      >
-        <div class="modal-container">
-          <a href="#" class="close-icons" @click.prevent="showModal = false">
+      <div class="modal" x-show="showModal" style="display: none">
+        <div class="modal-container" :class="showModal ? 'show' : 'hide'">
+          <a href="#" class="close-icons" @click.prevent="closeModal()">
             <i data-feather="x"></i>
           </a>
 
@@ -362,19 +335,35 @@
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   </p>
 
-                  <div class="product-stars">
-                    <i data-feather="star"></i>
-                    <i data-feather="star"></i>
-                    <i data-feather="star"></i>
-                    <i data-feather="star"></i>
-                    <i data-feather="star"></i>
+                  <div class="product-stars" x-data="{ hover: 0 }">
+                    <template x-for="star in 5" :key="star">
+                      <svg
+                        width="24"
+                        height="24"
+                        class="star"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        :class="(hover || selectedItem.rating) >= star ? 'active' : ''"
+                        @click="selectedItem.rating = star"
+                        @mouseenter="hover = star"
+                        @mouseleave="hover = 0"
+                      >
+                        <use href="img/feather-sprite.svg#star"></use>
+                      </svg>
+                    </template>
                   </div>
 
                   <div class="product-price">
                     <span x-text="rupiah(selectedItem.price)"></span>
                   </div>
 
-                  <a href="#" @click.prevent="$store.cart.add(selectedItem)">
+                  <a
+                    href="#"
+                    @click.prevent=" $store.cart.add(selectedItem);
+                      closeModal();
+                    "
+                  >
                     <svg
                       width="24"
                       height="24"

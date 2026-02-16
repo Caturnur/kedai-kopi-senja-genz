@@ -1,14 +1,33 @@
 document.addEventListener("alpine:init", () => {
   Alpine.data("products", () => ({
     items: [
-      { id: 1, name: "Coffe Nganu", img: "1.jpg", price: 2000 },
-      { id: 2, name: "Coffe Ngene", img: "2.jpg", price: 7000 },
-      { id: 3, name: "Coffe Ngono", img: "3.jpg", price: 6000 },
-      { id: 4, name: "Coffe Ngunu", img: "4.jpg", price: 9000 },
-      { id: 5, name: "Coffe Ngopo", img: "5.jpg", price: 5000 },
+      { id: 1, name: "Coffe Nganu", img: "1.jpg", price: 2000, rating: 0 },
+      { id: 2, name: "Coffe Ngene", img: "2.jpg", price: 7000, rating: 0 },
+      { id: 3, name: "Coffe Ngono", img: "3.jpg", price: 6000, rating: 0 },
+      { id: 4, name: "Coffe Ngunu", img: "4.jpg", price: 9000, rating: 0 },
+      { id: 5, name: "Coffe Ngopo", img: "5.jpg", price: 5000, rating: 0 },
     ],
     selectedItem: null,
     showModal: false,
+    openModal(item) {
+      this.selectedItem = item;
+      this.showModal = true;
+
+      this.$nextTick(() => {
+        this.$refs.modalBox.classList.add("show");
+      });
+    },
+    closeModal() {
+      const modal = document.querySelector(".modal-container");
+
+      modal.classList.remove("show");
+      modal.classList.add("hide");
+
+      setTimeout(() => {
+        this.showModal = false;
+        modal.classList.remove("hide");
+      });
+    },
   }));
 
   Alpine.store("cart", {
